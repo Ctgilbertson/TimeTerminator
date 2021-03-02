@@ -38,8 +38,7 @@ public class PlayerMovement : MonoBehaviour
         //transform.up takes the direction that the player is facing and goes forward
 
         //calculate jump
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
+        if(Input.GetButtonDown("Jump")&& isGrounded){
             //Equation for jump height is sqrt(height*-2*gravity)
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -48,21 +47,25 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         //Move the player down multiplying by time again becasue it is 1/2g *t^2
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity*Time.deltaTime);
 
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
             Vector3 move = transform.right * x + transform.forward * z;
 
-            controller.Move(move * speed * 2 * Time.deltaTime);
+            controller.Move(move * speed*2 * Time.deltaTime);
         }
         else
         {
 
-            Vector3 move = transform.right * x + transform.forward * z;
+            Vector3 move = transform.right*x+ transform.forward*z;
             controller.Move(move * speed * Time.deltaTime);
 
+        }
+        if (Input.GetKey(KeyCode.C))
+        {
+            camera.transform,position = new Vector3(0, .5, 0);
         }
 
 
