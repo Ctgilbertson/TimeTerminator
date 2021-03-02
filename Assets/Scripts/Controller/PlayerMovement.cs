@@ -8,7 +8,9 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     public Camera camera;
 
-
+    private Vector3 originalCenter;
+    private float originalHeight;
+    private float originalMoveSpeed;
     public float speed = 12f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
@@ -23,7 +25,17 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
 
     bool isGrounded;
+    bool crouch;
 
+
+    void Start()
+    {
+
+        originalCenter = controller.center;
+        originalHeight = controller.height;
+        originalMoveSpeed = speed;
+
+    }
     // Update is called once per frame
     void Update()
     {
@@ -60,12 +72,28 @@ public class PlayerMovement : MonoBehaviour
         {
 
             Vector3 move = transform.right*x+ transform.forward*z;
+
             controller.Move(move * speed * Time.deltaTime);
 
         }
-        if (Input.GetKey(KeyCode.C))
+        if (Input.GetButtonDown("Fire1") && isGrounded)
         {
-            camera.transform,position = new Vector3(0, .5, 0);
+            Vector3 position = Camera.main.transform.position;
+            position[1] = 2f;
+            Camera.main.transform.position = position;
+            //controller.height = 2f;
+            // controller.center = new Vector3(0f, 1f, 0f);
+            // speed = 12f;
+        }
+
+        if (Input.GetButtonUp("Fire1"))
+        {
+            Vector3 position = Camera.main.transform.position;
+            position[1] = 4f;
+            Camera.main.transform.position = position;
+            //          controller.center = new Vector3(0f, -1f, 0f);
+            //            controller.height = originalHeight;
+            //           speed = originalMoveSpeed;
         }
 
 
